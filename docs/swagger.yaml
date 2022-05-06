@@ -1,0 +1,151 @@
+definitions:
+  model.Referral:
+    properties:
+      active:
+        type: boolean
+      code:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.User:
+    properties:
+      balance:
+        type: number
+      createdAt:
+        type: string
+      id:
+        type: integer
+      referralID:
+        type: integer
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+  server.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  server.LoginRes:
+    properties:
+      token:
+        type: string
+    type: object
+  server.RegisterReq:
+    properties:
+      password:
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  server.RegisterRes:
+    properties:
+      id:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Logs in a user
+      parameters:
+      - description: req
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/server.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.LoginRes'
+      summary: Login
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: registers a new user
+      parameters:
+      - description: req
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/server.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.RegisterRes'
+      summary: Register
+      tags:
+      - Auth
+  /referral:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Referral'
+            type: array
+      summary: list user's referrals
+      tags:
+      - Referral
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses: {}
+      summary: Create signup referral
+      tags:
+      - Referral
+  /user:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+      summary: list users
+      tags:
+      - User
+swagger: "2.0"
