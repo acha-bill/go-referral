@@ -7,14 +7,17 @@ import (
 	"os"
 	"strings"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/go-playground/validator"
 	"github.com/joho/godotenv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
 
 	_ "referral/docs"
+
+	_ "github.com/joho/godotenv/autoload"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
@@ -27,7 +30,7 @@ var (
 )
 
 func init() {
-	godotenv.Load("../.env")
+	godotenv.Load("./../.env")
 	e = echo.New()
 	e.Validator = &CustomValidator{validator: validator.New()}
 	signingKey = os.Getenv("JWT_SECRET")
@@ -44,6 +47,9 @@ func init() {
 			return false
 		},
 	}
+
+	log.Println("signingKey, ", signingKey)
+	log.Printf("%+v\n", JWTConfig)
 }
 
 // @title Referral program API
@@ -61,7 +67,6 @@ func init() {
 // @host petstore.swagger.io
 // @BasePath /
 func Start() {
-	e.Logger.SetLevel(log.INFO)
 	e.Use(middleware.JWTWithConfig(JWTConfig))
 	base := e.Group("")
 	addAuthRoutes(base)

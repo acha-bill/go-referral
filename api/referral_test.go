@@ -44,7 +44,7 @@ func Test_createSignupReferral(t *testing.T) {
 	require.NoError(t, err)
 	fmt.Println(res.Link)
 
-	assert.Regexp(t, `http:\/\/localhost:\d+\/auth\/signup\?code=\d+`, res.Link)
+	assert.Regexp(t, `http:\/\/localhost:\d+\/auth\/register\?code=\d+`, res.Link)
 }
 
 func Test_listReferrals(t *testing.T) {

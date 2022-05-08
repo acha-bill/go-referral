@@ -69,20 +69,20 @@ func register(c echo.Context) error {
 	}
 
 	if err = c.Validate(req); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err)
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	code, codeStr := uint32(0), c.QueryParam("code")
 	if codeStr != "" {
 		code64, err := strconv.ParseUint(codeStr, 10, 32)
 		if err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, err)
+			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 		code = uint32(code64)
 
 	}
 	user, e := pkg.CreateUser(req.Username, req.Password, code)
 	if e != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, e)
+		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 	}
 	return c.JSON(http.StatusCreated, &RegisterRes{ID: user.ID})
 }
@@ -116,7 +116,7 @@ func login(c echo.Context) error {
 
 	signedToken, e := GetToken(user.ID)
 	if e != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, e)
+		return echo.NewHTTPError(http.StatusInternalServerError, e.Error())
 	}
 	return c.JSON(http.StatusOK, &LoginRes{Token: signedToken})
 }

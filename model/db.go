@@ -17,12 +17,13 @@ var modelsToMigrate = []interface{}{
 }
 
 // InitDB initializes the DB.
-func InitDB(username, password, port, host, dbName string) error {
+func InitDB(username, password, host, port, dbName string) error {
 	config := &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, port, host, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbName)
+	log.Println(dsn)
 	gormDB, err := gorm.Open(mysql.Open(dsn), config)
 	if err != nil {
 		return err

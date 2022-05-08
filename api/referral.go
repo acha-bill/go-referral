@@ -21,7 +21,7 @@ func addReferralRoutes(c *echo.Group) {
 	c.POST("/referral", createSignupReferral)
 }
 
-// @Summary      Create signup referral
+// @Summary      Create register referral
 // @Description
 // @Tags         Referral
 // @Accept       json
@@ -30,13 +30,13 @@ func addReferralRoutes(c *echo.Group) {
 func createSignupReferral(c echo.Context) error {
 	user := GetUserFromContext(c)
 	if user == nil {
-		return echo.NewHTTPError(http.StatusNotFound, ErrUnauthorized)
+		return echo.NewHTTPError(http.StatusNotFound, ErrUnauthorized.Error())
 	}
 	referral, err := pkg.CreateReferral(user)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err)
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	link := fmt.Sprintf("%s://%s/auth/signup?code=%d", c.Scheme(), c.Request().Host, referral.Code)
+	link := fmt.Sprintf("%s://%s/auth/register?code=%d", c.Scheme(), c.Request().Host, referral.Code)
 	return c.JSON(http.StatusCreated, CreateReferralRes{Link: link})
 }
 
@@ -50,7 +50,7 @@ func createSignupReferral(c echo.Context) error {
 func listUserReferrals(c echo.Context) error {
 	user := GetUserFromContext(c)
 	if user == nil {
-		return echo.NewHTTPError(http.StatusNotFound, ErrUnauthorized)
+		return echo.NewHTTPError(http.StatusNotFound, ErrUnauthorized.Error())
 	}
 	referrals := model.GetReferralsByUserID(user.ID)
 	return c.JSON(http.StatusCreated, referrals)

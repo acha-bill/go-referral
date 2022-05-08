@@ -29,22 +29,6 @@ services:
     networks:
       - referral
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_container
-    depends_on:
-      - referral_mysql
-    environment:
-      - PMA_HOST=referral_mysql
-      - PMA_USER=${DB_USER}
-      - PMA_PORT=${DB_PORT}
-      - PMA_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "9090:80"
-    restart: always
-    networks:
-      - referral
-
 volumes:
   api:
   database_mysql:

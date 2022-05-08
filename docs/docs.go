@@ -36,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.LoginReq"
+                            "$ref": "#/definitions/api.LoginReq"
                         }
                     }
                 ],
@@ -44,7 +44,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.LoginRes"
+                            "$ref": "#/definitions/api.LoginRes"
                         }
                     }
                 }
@@ -70,7 +70,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/server.RegisterReq"
+                            "$ref": "#/definitions/api.RegisterReq"
                         }
                     }
                 ],
@@ -78,7 +78,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.RegisterRes"
+                            "$ref": "#/definitions/api.RegisterRes"
                         }
                     }
                 }
@@ -118,7 +118,7 @@ const docTemplate = `{
                 "tags": [
                     "Referral"
                 ],
-                "summary": "Create signup referral",
+                "summary": "Create register referral",
                 "responses": {}
             }
         },
@@ -149,6 +149,53 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.LoginRes": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.RegisterReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 8
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.RegisterRes": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Referral": {
             "type": "object",
             "properties": {
@@ -192,53 +239,6 @@ const docTemplate = `{
                 },
                 "username": {
                     "type": "string"
-                }
-            }
-        },
-        "server.LoginReq": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.LoginRes": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.RegisterReq": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string",
-                    "minLength": 8
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "server.RegisterRes": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
                 }
             }
         }

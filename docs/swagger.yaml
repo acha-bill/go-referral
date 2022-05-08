@@ -1,4 +1,35 @@
 definitions:
+  api.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  api.LoginRes:
+    properties:
+      token:
+        type: string
+    type: object
+  api.RegisterReq:
+    properties:
+      password:
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  api.RegisterRes:
+    properties:
+      id:
+        type: integer
+    type: object
   model.Referral:
     properties:
       active:
@@ -29,37 +60,6 @@ definitions:
       username:
         type: string
     type: object
-  server.LoginReq:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-    required:
-    - password
-    - username
-    type: object
-  server.LoginRes:
-    properties:
-      token:
-        type: string
-    type: object
-  server.RegisterReq:
-    properties:
-      password:
-        minLength: 8
-        type: string
-      username:
-        type: string
-    required:
-    - password
-    - username
-    type: object
-  server.RegisterRes:
-    properties:
-      id:
-        type: integer
-    type: object
 info:
   contact: {}
 paths:
@@ -74,14 +74,14 @@ paths:
         name: login
         required: true
         schema:
-          $ref: '#/definitions/server.LoginReq'
+          $ref: '#/definitions/api.LoginReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.LoginRes'
+            $ref: '#/definitions/api.LoginRes'
       summary: Login
       tags:
       - Auth
@@ -96,14 +96,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/server.RegisterReq'
+          $ref: '#/definitions/api.RegisterReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.RegisterRes'
+            $ref: '#/definitions/api.RegisterRes'
       summary: Register
       tags:
       - Auth
@@ -129,7 +129,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Create signup referral
+      summary: Create register referral
       tags:
       - Referral
   /user:
