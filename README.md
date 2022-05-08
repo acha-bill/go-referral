@@ -54,3 +54,6 @@ Swagger docs are available at http://localhost:8080/swagger/index.html
 The diagram below shows the interaction between the various entities.
 
 ![design](https://i.postimg.cc/X7kbHz1k/Untitled-Diagram-drawio.png)
+
+## .env
+.env is committed simply to facilitate testing. In production, you wouldn't do this.
