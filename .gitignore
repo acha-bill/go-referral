@@ -30,4 +30,4 @@ go.work
 .DS_Store
 
 # env
-.env
+#.env
